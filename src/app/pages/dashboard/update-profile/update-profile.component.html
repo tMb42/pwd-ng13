@@ -1,0 +1,150 @@
+<div fxLayoutAlign="space-around start">
+  <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+    <mat-card >
+      <mat-card-content>
+        <form [formGroup]="profileUpdateForm" name="profileUpdateForm">
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <div fxFlex.xs="100%">
+              <mat-card-title><mat-icon class="card-icon">account_box</mat-icon>&nbsp; Profile update &nbsp;</mat-card-title>
+            </div>
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label><mat-icon>contact_mail</mat-icon> &nbsp; Registered E-mail</mat-label>
+                <input matInput formControlName="email" type="email" style="color: greenyellow; font-size: 14px; "/>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label> First Name *</mat-label>
+                <input matInput formControlName="firstname" type="text" placeholder="First Name"/>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label> Middle Name </mat-label>
+                <input  matInput formControlName="middlename" type="text" placeholder="Middle Name (if any)"/>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label> Last Name* </mat-label>
+                <input matInput formControlName="lastname" type="text" placeholder="Last Name"/>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label>Select*</mat-label>
+                <select matNativeControl required
+                  matTooltip="Are you a Civil Engineer under West Bengal PWD?"
+                  formControlName="isDepartment"
+                  value="null"
+                  (change)="onDepartmentChange($event.target)">
+                  <option value="null">--Select--</option>
+                  <option value=1>Yes</option>
+                  <option value=0>No</option>
+                </select>
+                <mat-error *ngIf="profileUpdateForm.hasError('required')">
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100%" *ngIf="profileUpdateForm.get('isDepartment').value==1">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label>Department*</mat-label>
+                <mat-select matNativeControl formControlName="department" required>
+                  <mat-option value="1">--Select Department--</mat-option>
+                  <mat-option *ngFor="let department of depts" [value]="department.id">
+                    {{ department.department_short_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100%" *ngIf="profileUpdateForm.get('isDepartment').value==1">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label>Designation*</mat-label>
+                <mat-select matNativeControl formControlName="designation" required>
+                  <mat-option value="1">--Select Designation--</mat-option>
+                  <mat-option *ngFor="let designation of designs" [value]="designation.id">
+                    {{ designation.designation_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100%" *ngIf="profileUpdateForm.get('isDepartment').value==0">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label>Profession*</mat-label>
+                <mat-select matNativeControl formControlName="department" >
+                  <mat-option value="1">--Select Your Profesion--</mat-option>
+                  <mat-option *ngFor="let role of roles" [value]="role.id">
+                    {{ role.label }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label>Gender*</mat-label>
+                <select matNativeControl formControlName="gender" required>
+                  <option value="">--Select Gender--</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+                <mat-error *ngIf="profileUpdateForm.hasError('required')">
+                  This field is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100%">
+              <mat-form-field appearance="outline">
+              <mat-label>Select Date of Birth*</mat-label>
+                <input
+                  matInput
+                  formControlName="birthDate"
+                  [matDatepicker]="picker"
+                  (dateChange)="compaireGradationListDOB('change', $event)"
+                >
+                <mat-datepicker-toggle matSuffix [for]="picker">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label> Mobile No*</mat-label>
+                <input matInput formControlName="mobileNo" (keyup)="isMobileRegistered($event.target)" type="text" placeholder="Mobile No" required/>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100%">
+              <span *ngIf="searchMobile" class="spinner-border spinner-border-sm text-primary"></span>
+              <mat-error style="color: orangered; font-size: 12px; float: right;" *ngIf="message">{{message}}</mat-error>
+            </div>
+          </div>
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <div fxFlexFill fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <mat-form-field fxFlex="100" appearance="outline">
+                <mat-label>Textarea</mat-label>
+                <textarea matInput formControlName="aboutMe" placeholder="Write Somthing about yourself" ></textarea>
+              </mat-form-field>
+            </div>
+            <div fxLayout.xs="100%" >
+              <button mat-raised-button color="accent" [disabled]="!profileUpdateForm.valid" (click)="updateUserProfile()">Update Profile</button>
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+
+
+

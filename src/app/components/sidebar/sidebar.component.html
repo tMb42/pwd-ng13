@@ -1,0 +1,128 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" style="background-image: url(assets/img/tmb/sidebar-2.jpg); background-size: cover; background-position: top center; ">
+    <img class="logo" src="../assets/img/tmb/logo_tmb.png"/>
+    <mat-accordion >
+      <mat-expansion-panel [expanded]=expanded class="accordion-panel" *ngIf="authUser">
+        <mat-expansion-panel-header class="accordion-header" >
+          <mat-panel-title>
+            <mat-card-header>
+              <div mat-card-avatar fxLayout="row" fxLayoutAlign="start start">
+                <img class="avatar" [src]="imagePreview || authUser.photo" />
+              </div>
+              <div fxLayout="row" fxLayoutAlign="end start">
+                <mat-card-title style="font-size: small; white-space: nowrap; margin-top: 15px !important;">{{ authUser.name }}</mat-card-title>
+                <mat-card-subtitle style="font-size: smaller;">&nbsp;{{ authUser.designation_name }}</mat-card-subtitle>
+              </div>
+            </mat-card-header>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <mat-nav-list>
+            <mat-list-item [routerLink]="['dashboard/profile']">My Profile</mat-list-item>
+            <mat-list-item [routerLink]="['dashboard/update-profile']">Update Profile</mat-list-item>
+            <mat-list-item *ngIf="authUser.is_pwd_engineer" [routerLink]="['dashboard/profile']">PWD Working Profile</mat-list-item>
+            <mat-list-item [routerLink]="['dashboard/change-password']">Change Password</mat-list-item>
+            <mat-list-item [routerLink]="['dashboard/delete-account']">Suspend my Account</mat-list-item>
+          </mat-nav-list>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <button mat-raised-button color="accent" class="sidenav-button" *ngIf="isLoggedIn" [routerLink]="['/dashboard']" routerLinkActive="active">
+      <mat-icon>dashboard</mat-icon>Dashboard
+    </button>
+
+    <!-- Nested menu -->
+    <mat-nav-list *ngIf="authUser">
+      <ng-container *ngFor="let menu of menuList  index as i;">
+        <ng-container [ngTemplateOutlet]="menu.children ?  childMenu : parentMenu" [ngTemplateOutletContext]="{menu:menu}"
+        *ngIf="isPwdEngineer(menu) || (authUser.roles.includes(menu.role))"
+        >
+        </ng-container>
+      </ng-container>
+    </mat-nav-list>
+
+    <ng-template #parentMenu let-menu="menu">
+      <mat-list-item [routerLink]="menu.routerLink" routerLinkActive="is-active" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon>{{menu.icon}}</mat-icon> {{menu.label}}
+      </mat-list-item>
+    </ng-template>
+
+    <ng-template #childMenu let-menu="menu">
+      <mat-expansion-panel [class.mat-elevation-z0]="true">
+        <mat-expansion-panel-header>
+          <mat-icon mat-list-icon>{{menu.icon}}</mat-icon>{{menu.label}}
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item [routerLink]="submenu.routerLink" *ngFor="let submenu of menu.children" routerLinkActive="is-active" [routerLinkActiveOptions]="{exact: true}">
+            <mat-icon>{{submenu.icon}}</mat-icon> {{submenu.label}}
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-expansion-panel>
+    </ng-template>
+    <!-- Nested menu -->
+
+
+    <!-- <div *ngIf="authUser">
+      <div routerLinkActive="active" routerLinkActive="active" [routerLink]="[menuitem.path]" *ngFor="let menuitem of pwdMenuItems">
+        <button mat-raised-button class="sidenav-pwd-menu-button" *ngIf="isPwdEngineer(menuitem) || authUser.roles.includes(menuitem.role)">
+          <mat-icon class="mr">{{menuitem.icon}}</mat-icon >&nbsp;&nbsp;{{menuitem.label}}
+        </button>
+      </div>
+    </div> -->
+
+
+
+    <li *ngIf="authUser">
+      <ul *ngIf="!authUser.mobile">
+        <h2 id="message">
+          Please Update your profile. It is compulsory for new user to use this website.
+        </h2>
+        <h3 id="message2">
+          Click on above dropdown menu   and then click on update Profile.
+        </h3>
+      </ul>
+    </li>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div fxLayout="row" fxLayoutAlign="center end">
+      <mat-toolbar>
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon *ngIf="!sidenav.opened">menu_open</mat-icon>
+          <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+        </button>
+
+        <span class="spacer"></span>
+
+        <button mat-button *ngIf="isLoggedIn"  [routerLink]="['']" routerLinkActive="active">
+          <mat-icon>home</mat-icon>
+          Home
+        </button>
+        <button mat-button *ngIf="isLoggedIn" (click)="logoutCurrentUser()">
+          <mat-icon>exit_to_app</mat-icon>
+          Logout
+        </button>
+
+        <div class="flex-spacer"></div>
+
+        <mat-icon class="mr-8">brightness_5</mat-icon>
+        <mat-slide-toggle [formControl]="toggleControl" class="mr-8">
+
+        </mat-slide-toggle>
+        <mat-icon>bedtime</mat-icon>
+      </mat-toolbar>
+    </div>
+    <div style="background-image: url('../assets/img/tmb/home.jpg'); background-size: cover; background-position: top center;">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+
+
+
+
+

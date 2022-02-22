@@ -1,0 +1,57 @@
+<mat-card  *ngIf="authUser">
+  <div fxFlexFill fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+    <div fxFlex.xs="100%">
+      <mat-card-header>
+        <img mat-card-image [src]="imagePreview || authUser.photo" class="avatar"><br/>
+        <mat-card-title>{{ authUser.name }}</mat-card-title>
+        <mat-card-subtitle><mat-icon>contact_mail</mat-icon> &nbsp;  {{ authUser.email }}</mat-card-subtitle>
+        <mat-card-subtitle>Designation: {{ authUser.designation_name }}</mat-card-subtitle>
+        <mat-card-subtitle>Role: {{ authUser.roleLabel  }}</mat-card-subtitle>
+        <mat-card-subtitle>Permision: {{ authUser.permissionLabel }}</mat-card-subtitle>
+        <mat-card-subtitle>Last Profile Image Updated: {{ authUser.avatar_updated_at }}</mat-card-subtitle>
+        <mat-card-subtitle>Last Profile Updated: {{ authUser.profile_updated_at }}</mat-card-subtitle>
+      </mat-card-header>
+    </div>
+    <div fxFlex.xs="100%">
+      <mat-card-content>
+        <p><strong>About me:</strong><br>
+          {{ authUser.remarks }}
+        </p>
+      </mat-card-content>
+    </div>
+  </div>
+  <div fxFlexFill fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+    <div fxFlex.xs="100%">
+      <mat-card-actions>
+        <input
+          matTooltip="Image supported file format jpeg, png, jpg, gif, svg Only with min: 3Kb & max: 300Kb"
+          type="file"
+          #fileInput
+          name="fileInput"
+          accept="image/*"
+          (change)="onFileSelected($event)"
+        />
+        <input type="hidden" (click)="fileInput.click()" />
+        <button mat-raised-button color="accent" [disabled]="!imagePreview" (click)="profilePictureUpload()" >
+          <span *ngIf="imageSending" class="spinner-border text-success"></span>Upload
+        </button>
+        <button mat-raised-button color="primary" [routerLink]="['../../dashboard']" routerLinkActive="active">
+          Cancel
+        </button>
+      </mat-card-actions>
+    </div>
+  </div>
+</mat-card>
+
+<!-- <mat-form-field>
+  <div fxFlex.xs="100%">
+    <mat-toolbar>
+      <input matInput [value]="selectedFileNames.length ? selectedFileNames : 'Select Images'" />
+      <button mat-raised-button color="accent" [disabled]="!selectedFiles" (click)="uploadFiles()">
+        Upload
+      </button>
+    </mat-toolbar>
+    <input type="file" id="fileInput" name="fileInput" accept="image/*" multiple (change)="selectFiles($event)" />
+  </div>
+</mat-form-field> -->
+

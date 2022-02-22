@@ -1,0 +1,133 @@
+<div fxLayoutAlign="space-around start" mat-dialog-content>
+  <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+    <mat-card >
+      <mat-card-content>
+        <form [formGroup]="engrsUpdateForm" name="engrsUpdateForm">
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <div fxFlex.xs="100%">
+              <mat-card-title><mat-icon class="card-icon">account_box</mat-icon>&nbsp; Engineer's Update &nbsp; </mat-card-title>
+            </div>
+          </div>
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label>ID</mat-label>
+                <input matInput formControlName="id" type="text" placeholder="ID"/>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label>HRMS ID</mat-label>
+                <input matInput formControlName="hrms_id" type="text" placeholder="HRMS ID"/>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label> First Name</mat-label>
+                <input matInput formControlName="firstname" type="text" placeholder="First Name"/>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label> Middle Name </mat-label>
+                <input  matInput formControlName="middlename" type="text" placeholder="Middle Name (if any)"/>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label> Last Name</mat-label>
+                <input matInput formControlName="lastname" type="text" placeholder="Last Name"/>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label>Employee's Caste</mat-label>
+                <mat-select matNativeControl formControlName="caste" required>
+                  <mat-option value="1">--Select Caste--</mat-option>
+                  <mat-option *ngFor="let caste of castes" [value]="caste.id">
+                    {{ caste.caste_alias }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100%">
+              <mat-form-field fxFlex appearance="outline">
+                <mat-label>Entry Post</mat-label>
+                <mat-select matNativeControl formControlName="designation">
+                  <mat-option value="1">--Select Designation--</mat-option>
+                  <mat-option *ngFor="let designation of designs" [value]="designation.id">
+                    {{ designation.designation_name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100%">
+              <mat-form-field appearance="outline">
+              <mat-label>Joining Date(dd/mm/yyyy)</mat-label>
+                <input
+                  matInput
+                  formControlName="joinDate"
+                  [matDatepicker]="picker2"
+                >
+                <mat-datepicker-toggle matSuffix [for]="picker2">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <div fxFlex.xs="100%">
+              <mat-form-field appearance="outline">
+              <mat-label>Date of Birth(dd/mm/yyyy)</mat-label>
+                <input
+                  matInput
+                  formControlName="birthDate"
+                  [matDatepicker]="picker"
+                >
+                <mat-datepicker-toggle matSuffix [for]="picker">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxFlex.xs="100%">
+              <mat-form-field appearance="outline">
+              <mat-label>Retirement(dd/mm/yyyy)</mat-label>
+                <input
+                  matInput
+                  formControlName="retrDate"
+                  [matDatepicker]="picker3"
+                >
+                <mat-datepicker-toggle matSuffix [for]="picker3">
+                  <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlexFill fxLayout="row wrap" fxLayoutGap="10px" fxLayoutGap.xs="0">
+            <div fxFlexFill fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <mat-form-field fxFlex="100" appearance="outline">
+                <mat-label>Remarks (if any)</mat-label>
+                <textarea matInput formControlName="remarks" placeholder="Remarks"></textarea>
+              </mat-form-field>
+            </div>
+            <div fxLayout.xs="100%" >
+              <button mat-raised-button color="primary" [disabled]="!engrsUpdateForm.valid" (click)="updateEngrsServiceData()">Update</button>
+              <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+
+
+

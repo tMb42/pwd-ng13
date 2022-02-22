@@ -1,0 +1,65 @@
+<div fxLayoutAlign="space-around" style="margin-top: 100px;">
+  <mat-card>
+    <mat-card-content >
+      <div fxLayout="row wrap">
+        <h2>Sign in</h2>
+        <span class="spacer"></span>
+        <div *ngFor="let button of socials">
+          <button
+            mat-flat-button
+            [ngStyle]="{'background-color': button.bgColor, 'color': button.iconColor}"
+            (click)="socialiteLogin(button.provider)"
+            >
+             {{ button.provider }}
+          </button>
+        </div>
+      </div>
+      <form [formGroup]="loginForm" name="loginForm">
+        <div fxLayout="row">
+          <mat-form-field fxFlex >
+            <mat-label><mat-icon style="color:orange; margin-right: 8px;">faFreeSoildIcon</mat-icon>Email</mat-label>
+            <input formControlName="email" matInput required />
+            <mat-error *ngIf="loginForm.get('email').errors?.['required']">
+              Valid E-mail is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+          <mat-form-field fxFlex >
+            <mat-label><mat-icon style="color:white; margin-right: 8px;">faLock</mat-icon>Password</mat-label>
+              <input type="password" matInput formControlName="password" [type]="hide ? 'password' : 'text'" required />
+              <button
+                mat-icon-button matSuffix (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              <mat-error *ngIf="loginForm.get('password').errors?.['required']">
+                Password is required.
+              </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="form-group col-12" >
+            <div style="float: left" >
+              <mat-checkbox type="checkbox" formControlName="rememberMe">Remember me</mat-checkbox>
+            </div>
+            <div style="float: right" >
+              <button mat-raised-button color="accent" [disabled]="!loginForm.valid" (click)="onLogin()">Login</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12">
+            <div style="float: left;">
+              <button mat-button color="accent" [routerLink]="['../forgot-password']">Forget Your Password ?</button>
+            </div>
+            <div style="float: right" >
+              <button mat-button routerLink='../register' >Not Registered</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

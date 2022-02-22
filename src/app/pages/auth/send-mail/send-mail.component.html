@@ -1,0 +1,46 @@
+<div fxLayoutAlign="space-around center" style="margin-top: 100px;">
+  <div fxLayout="row wrap">
+    <mat-card-content class="contact-Form">
+      <h1>Contact Form</h1>
+      <mat-progress-spinner *ngIf="isLoading"
+        class="spinner-margin"
+        [color]="color"
+        [mode]="mode"
+        [value]="value">
+      </mat-progress-spinner>
+      <form fxLayout="row wrap" [formGroup]="contactForm" name="contactForm" >
+        <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column">
+          <mat-form-field fxFlex>
+            <input matInput type="text" placeholder="Your full name" formControlName="fullname">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="6px">
+          <mat-form-field fxFlex>
+            <input matInput type="text" placeholder="E-Mail" formControlName="email">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="6px">
+          <mat-form-field fxFlex>
+            <input matInput type="text" placeholder="Mobile No." formControlName="mobile">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="6px" >
+          <textarea matInput MinRows="1" MaxRows="5" type="text" placeholder="Write your Message here" formControlName="message"></textarea>
+        </div>
+        <div class="flex flex-row">
+          <div fxLayout="row">
+            <button fxLayoutAlign="start" mat-raised-button [routerLink]="['/auth']" >Cancel</button>
+            <button fxLayoutAlign="end" mat-raised-button color="primary" (click)="resetForm()">Reset</button>
+            <button fxLayoutAlign="end" mat-raised-button color="accent" [disabled]="!contactForm.valid" (click)="submitContactForm()">Send Message</button>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </div>
+</div>
+
+
+
+
+
+

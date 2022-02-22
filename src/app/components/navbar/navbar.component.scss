@@ -1,0 +1,34 @@
+.spacer {
+  flex: 1;
+}
+.brand {
+  margin-top: 15px;
+  margin-left: 20px;
+  font-size: 24px;
+}
+.logo {
+  margin-top: 10px;
+  margin-left: 20px;
+  width: 80px;
+}
+.mr {
+  margin-right: 5px;
+}
+.mat-icon {
+  margin-right: 10px;
+  vertical-align: middle;
+  font-size: 32px;
+  position: relative;
+}
+.wrapper {
+  position: relative;
+  background-color: transparent;
+  top: 0px;
+  height: 0vh;
+}
+.navbar-top {
+  position: relative;
+  background-color: transparent;
+  padding-top: 0px;
+  padding-bottom: 100px;
+}

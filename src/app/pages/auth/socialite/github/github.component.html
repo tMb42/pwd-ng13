@@ -1,0 +1,11 @@
+<div fxLayoutAlign="space-around" style="margin-top: 100px;">
+  <div class="col-md-3 offset-md-7 mt-0">
+      <h2 style="color: rgb(238, 217, 217);">Login with GitHub, please wait!</h2>
+  </div>
+  <div *ngIf="isLoading" class="align-items-center">
+      <span class="spinner-border text-primary"></span>
+      <span class="spinner-border text-light"></span>
+      <span class="spinner-border text-danger"></span>
+      <span class="spinner-border text-success"></span>
+  </div>
+</div>

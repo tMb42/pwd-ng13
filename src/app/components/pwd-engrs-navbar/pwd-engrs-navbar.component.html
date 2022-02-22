@@ -1,0 +1,91 @@
+<div class="container-fluid" >
+  <div class="wrapper">
+    <div  style="height: 100vh;">
+      <mat-toolbar class="navbar-top" id="toolbar" class="transparent" >
+        <mat-toolbar-row>
+          <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+            <mat-icon>menu</mat-icon>
+          </button>
+          <span style="font-size: 24px;">tMb</span>
+          <a class="navbar-brand">
+            <img class="image-responsive" src="../assets/img/tmb/logo_tmb.png"  style="max-height: 60px;" />
+          </a>
+
+          <div class="dropdown">
+            <button class="dashboardbtn" [routerLink]="['dashboard']" routerLinkActive="active"> Dashboard </button>
+          </div>
+          <span class="spacer"></span>
+
+          <div *ngIf="authUser" class="d-flex mt-5" style="font-size: small; color: rgb(188, 24, 221);">
+            <p>{{ authUser.name }},</p>&nbsp;
+            <p>{{ authUser.designation_alias }},</p>&nbsp;
+            <p>{{ authUser.userPosting }},</p>&nbsp;
+            <p>{{ authUser.department_short_name }}</p>
+          </div>
+          <span class="spacer"></span>
+
+          <div fxShow="true" fxHide.lt-md="true">
+            <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+            <div class="dropdown" style="padding-top: 25px;">
+              <button class="dropbtn"> Junior Engineer </button>
+              <div class="dropdown-content">
+                <a href="jengrs/gradation">Gradation List</a>
+                <a href="jengrs/passed">Departmental Passed</a>
+                <a href="jengrs/Promotion">Promotinal Position</a>
+                <a href="jengrs/caste">Caste Wise Passed List</a>
+                <a href="jengrs/retirement">Retirement</a>
+              </div>
+            </div>
+            <div class="dropdown" style="padding-top: 25px;">
+              <button class="dropbtn"> Assistant Engineer</button>
+              <div class="dropdown-content">
+                <a href="aengrs/gradation">Gradation List</a>
+                <a href="aengrs/confirmation">Confirmation Details</a>
+                <a href="aengrs/caste">Caste Wise Confirmation</a>
+                <a href="aengrs/Promotion">Promotional Details</a>
+                <a href="aengrs/retirement">Retirement Details</a>
+              </div>
+            </div>
+            <div class="dropdown" style="padding-top: 25px;">
+              <button class="dropbtn"> Senior Engineer </button>
+              <div class="dropdown-content">
+                <a href="sengrs/gradation">Gradation List</a>
+                <a href="sengrs/caste">Caste Wise Details</a>
+                <a href="sengrs/Promotion">Promotinal Details</a>
+                <a href="sengrs/retirement">Retirement Details</a>
+              </div>
+            </div>
+          </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+
+      <mat-sidenav-container fxFlexFill>
+        <mat-sidenav #sidenav>
+          <mat-nav-list>
+            <div *ngFor="let item of menuItems">
+              <button mat-button mat-list-item
+                [routerLink]="[item.path]"
+                routerLinkActive="active"
+                >
+                <mat-icon class="mr">{{item.icon}}</mat-icon>{{item.label}}
+              </button>
+            </div>
+
+            <a (click)="sidenav.toggle()" mat-list-item>
+              <mat-icon>close</mat-icon> Close
+            </a>
+          </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content fxFlexFill>
+          <router-outlet></router-outlet>
+        </mat-sidenav-content>
+
+      </mat-sidenav-container>
+    </div>
+  </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,12 @@
+<div fxLayoutAlign="space-around center" style="margin-top: 100px;">
+  <div fxLayout="row wrap">
+    <h2 style="color: greenyellow; margin-left: 15px;">E-mail Verification Status</h2>
+    <div class="alert-success" *ngIf="emailVerified" role="alert">
+      {{ verifyStatus }}
+    </div>
+
+    <div class="alert-danger" *ngIf="!emailVerified" role="alert">
+      {{ verifyStatus }}
+    </div>
+  </div>
+</div>

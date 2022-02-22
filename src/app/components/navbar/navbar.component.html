@@ -1,0 +1,112 @@
+<div class="container-fluid">
+  <div class="wrapper">
+    <div fxLayout="row">
+      <img class="logo" src="../assets/img/tmb/hummingbird.png">
+      <div class="brand">tMb-BCE</div>
+
+      <span class="spacer"></span>
+
+      <div *ngIf="isLoggedIn">
+        <button mat-button
+          *ngFor="let item of loginGuardMenu"
+          [routerLink]="[item.path]"
+          routerLinkActive="active"
+          [fxShow]="item.showOnDesktop"
+          [fxShow.xs]="item.showOnMobile"
+          [fxShow.sm]="item.showOnTablet"
+          >
+          <mat-icon class="mr">{{item.icon}}</mat-icon>{{item.label}}
+        </button>
+      </div>
+      <div *ngIf="isLoggedIn">
+        <button mat-button
+        *ngFor="let item of logoutMenu"
+          (click)="logoutCurrentUser()"
+          [fxShow]="item.showOnDesktop"
+          [fxShow.xs]="item.showOnMobile"
+          [fxShow.sm]="item.showOnTablet"
+          >
+          <mat-icon class="mr">{{item.icon}}</mat-icon>{{item.label}}
+        </button>
+      </div>
+      <div *ngIf="!isLoggedIn">
+        <button mat-button
+          *ngFor="let item of loginGuardMenu2"
+          [routerLink]="[item.path]"
+          routerLinkActive="active"
+          [fxShow]="item.showOnDesktop"
+          [fxShow.xs]="item.showOnMobile"
+          [fxShow.sm]="item.showOnTablet"
+          >
+          <mat-icon class="mr">{{item.icon}}</mat-icon>{{item.label}}
+        </button>
+      </div>
+      <div *ngFor="let item of menuItems">
+        <button mat-button
+          [routerLink]="[item.path]"
+          routerLinkActive="active"
+          [fxShow]="item.showOnDesktop"
+          [fxShow.xs]="item.showOnMobile"
+          [fxShow.sm]="item.showOnTablet"
+          >
+          <mat-icon class="mr">{{item.icon}}</mat-icon>{{item.label}}
+        </button>
+      </div>
+
+      <ng-container>
+        <button mat-icon-button [matMenuTriggerFor]="dropMenu">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #dropMenu="matMenu">
+          <ng-container>
+            <div
+              *ngFor="let item of logoutMenu"
+              [fxShow]="!item.showOnDesktop"
+              [fxShow.sm]="!item.showOnTablet"
+              [fxShow.xs]="!item.showOnMobile"
+              >
+              <button mat-menu-item *ngIf="isLoggedIn" (click)="logoutCurrentUser()">
+                <mat-icon class="mr">{{item.icon}}</mat-icon>{{item.label}}
+              </button>
+            </div>
+            <div
+              *ngFor="let item of loginGuardMenu2"
+              [routerLink]="[item.path]"
+              [fxShow]="!item.showOnDesktop"
+              [fxShow.sm]="!item.showOnTablet"
+              [fxShow.xs]="!item.showOnMobile"
+              >
+              <button mat-menu-item *ngIf="!isLoggedIn">
+                <mat-icon class="mr">{{item.icon}}</mat-icon>{{item.label}}
+              </button>
+            </div>
+            <div
+              *ngFor="let item of menuItems"
+              [routerLink]="[item.path]"
+              [fxShow]="!item.showOnDesktop"
+              [fxShow.sm]="!item.showOnTablet"
+              [fxShow.xs]="!item.showOnMobile"
+             >
+              <button mat-menu-item >
+                <mat-icon class="mr">{{item.icon}}</mat-icon>{{item.label}}
+              </button>
+            </div>
+            <div
+            *ngFor="let item of menuItems2"
+              [fxShow]="!item.showOnDesktop"
+              [fxShow.sm]="!item.showOnTablet"
+              [fxShow.xs]="!item.showOnMobile"
+             >
+              <button mat-menu-item >
+                <a mat-button href="{{item.link}}" target="_blank"><mat-icon class="mr">{{item.icon}}</mat-icon>{{item.label}}</a>
+              </button>
+            </div>
+          </ng-container>
+        </mat-menu>
+      </ng-container>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>
+
+
